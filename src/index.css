@@ -1,13 +1,147 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* TODO: for referance see the mobile-first-responsice-build website project  */
+
+/* layout */
+
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.main-section {
+    grid-column: 1/2;
 }
+
+.favourites {
+    grid-column: 2/2;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* menue (main card) */
+
+.menue {
+  margin-left: 140px;
+}
+
+.radio {
+    display: block;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+
+    color: #333333;
+}
+
+.msi-title {
+    width: 87px;
+    height: 28px;
+    margin-left: 140px;
+    margin-top: 40px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 28px;
+}
+
+.greeting {
+    width: 680px;
+    height: 44px;
+    margin-left: 140px;
+    margin-top: 106px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 44px;
+
+    color: #333333;
+}
+
+.joke-proposal {
+    width: 315px;
+    height: 44px;
+    margin-left: 140px;
+    margin-top: 2px;
+    margin-bottom: 40px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 44px;
+
+    color: #333333;
+}
+
+.get-joke-btn {
+    width: 152px;
+    height: 42px;
+    background: linear-gradient(92.01deg, #8ea7ff 0%, #7291ff 100%);
+    border-radius: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+    /* identical to box height, or 137% */
+
+    color: #ffffff;
+    margin-left: 140px;
+}
+
+.radio {
+  margin-left: 140px;
+}
+
+.main-card {
+  margin-top: 40px;
+  margin-left: 140px;
+  width: 680px;
+  height: 225px;
+
+  background: #F8F8F8;
+  border-radius: 20px;
+}
+
+.main-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+/* favourite card*/
+
+.favourite {
+  background: #F8F8F8;
+  width: 600px;
+  padding-left: 40px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    
+}
+
+.favourite-card {
+    width: 400px;
+    height: 180px;
+    background: #ffffff;
+    border: 1px solid #f8f8f8;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* mobile */
+/* set the base fontsize and define everything in ems */
+
+/* tablet */
+
+/* desktop */
