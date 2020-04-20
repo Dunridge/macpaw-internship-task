@@ -1,8 +1,43 @@
-import React from 'react';
+import React, {useState} from 'react';
 import MainCard from './MainCard';
 import MenueButton from '../assets/svg/MenueButton.svg';
+import AnimalButton from '../assets/svg/AnimalButton.svg';
+import CareerButton from '../assets/svg/CareerButton.svg';
+import CelebrityButton from '../assets/svg/CelebrityButton.svg';
+import DevButton from '../assets/svg/DevButton.svg';
 
 const Menue = () => {
+
+    //consider using useEffect hook 
+    // call useEffect hook and when you choose another value, set the display value for CSS as none 
+    // useEffect(() => { //
+    //     effect
+    //     return () => {
+    //         cleanup
+    //     }
+    // }, [input]) 
+
+    //true - display, false - hide 
+    const [randomCheck, setRandomCheck] = useState(false);
+    const [categoriesCheck, setCategoriesCheck] = useState(false);
+    const [searchCheck, setSearchCheck] = useState(false);
+    /* this is caused by the fact that you can't check 
+    your radio buttons repeatadly --> set the ability 
+    to check your buttons over and over again */
+    
+
+    const handleRandomCheck = (e) => {
+        setRandomCheck({ randomCheck: !randomCheck });
+    }
+
+    const handleCategoriesCheck = (e) => {
+        setCategoriesCheck({categoriesCheck: !categoriesCheck});
+    }
+
+    const handleSearchCheck = (e) => {
+        setSearchCheck({searchCheck: !searchCheck});
+    }
+
     return (
         <div className="menue">
             <div className="msi-control">
@@ -19,40 +54,56 @@ const Menue = () => {
             </div>
 
             <div className="options-container">
-                <div className="radio random">
-                    <input
-                        type="radio"
-                        name="radSize"
-                        id="sizeSmall"
-                        value="small"
-                        checked="checked"
-                    />
-                    <label for="sizeSmall">Random</label>
-                </div>
+                <form className="radio">
+                    <input type="radio" id="random" name="options" value="random" onClick={handleRandomCheck} />
+                    <label for="random">Random</label>
+                    {randomCheck ? (
+                        <div style={{display: "none"}}>Hi</div>
+                    ) : (
+                        <div style={{display: "none"}}>Bye</div>
+                    )}
+                    <br />
 
-                <div className="radio from-categories">
                     <input
                         type="radio"
-                        name="radSize"
-                        id="sizeMed"
-                        value="medium"
+                        id="from-categories"
+                        name="options"
+                        value="from categories"
+                        onClick={handleCategoriesCheck}
                     />
-                    <label for="sizeMed">From categories</label>
-                </div>
-
-                <div className="radio search">
+                    <label for="from-categories">From categories</label>
+                    {categoriesCheck ? (
+                        <div className="from-categories-container">
+                            <img src={AnimalButton} alt="menue button" />
+                            <img src={CareerButton} alt="menue button" />
+                            <img src={CelebrityButton} alt="menue button" />
+                            <img src={DevButton} alt="menue button" />
+                        </div>
+                    ):(
+                        <div className = "hide"></div>
+                    ) }
+                    <br />
                     <input
                         type="radio"
-                        name="radSize"
-                        id="sizeLarge"
-                        value="large"
+                        id="search"
+                        name="options"
+                        value="search"
+                        onClick={handleSearchCheck}
                     />
-                    <label for="sizeLarge">Search</label>
-                </div>
+                    <label for="search">Search</label>
+                    {searchCheck ? (
+                        <div className="search-container">
+                            <input type="text" placeholder="Free text search..."/>
+                        </div>
+                    ) : (
+                        <div className="hide">
+                            
+                        </div>
+                    )}
+                </form>
             </div>
 
             <button className="get-joke-btn">Get a joke</button>
-
             <MainCard />
         </div>
     );
