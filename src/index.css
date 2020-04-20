@@ -343,11 +343,7 @@ html {
         left: -250px;
     }
 
-    /* TODO: add the button for opening the menue 
-    To do that, you'll have to add an svg image component to the Favourite page 
-    and on the maximum width screen (the default one) set display to none, 
-    then look up how to do the menue thingy (...) --> use the z index to display the menue 
-    */
+    
 
 
     .msi-control {
@@ -374,9 +370,12 @@ html {
     /* ---------------------- */
 
     .favourites {
-        display: none;
-        /* visibility: hidden; */
+        /* display: none; */
+        visibility: hidden;
+        /* visibility: visible; */
         position: relative;
+        right: 685px;
+        z-index: 1;
     }
 }
 
