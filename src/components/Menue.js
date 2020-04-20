@@ -1,13 +1,21 @@
 import React from 'react';
 import MainCard from './MainCard';
+import MenueButton from '../assets/svg/MenueButton.svg';
 
 const Menue = () => {
     return (
         <div className="menue">
-            <div className="msi-title">MSI 2020</div>
+            <div className="msi-control">
+                <div className="msi-title">MSI 2020</div>
+                <div className="options-button-container">
+                    <img src={MenueButton} alt="menue button" />
+                    <div className="options-title">Favourite</div>
+                </div>
+            </div>
+
             <div className="greeting">Hey!</div>
             <div className="joke-proposal">
-                Let's try to find a joke for you:{' '}
+                Let's try to find a joke for you:
             </div>
 
             <div className="options-container">

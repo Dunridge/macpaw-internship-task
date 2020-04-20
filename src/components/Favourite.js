@@ -5,7 +5,7 @@ import Card from './Card';
 const Favourite = () => {
     return (
         <div className="favourite">
-            <h1>Favourite</h1>
+            <div className="favourite-title">Favourite</div>
             <Card/>
             <Card/>
             <Card/>
