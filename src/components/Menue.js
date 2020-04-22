@@ -21,6 +21,7 @@ const Menue = () => {
     const [randomCheck, setRandomCheck] = useState(false);
     const [categoriesCheck, setCategoriesCheck] = useState(false);
     const [searchCheck, setSearchCheck] = useState(false);
+    const [menueOpenedNum, setMenueOpenedNum] = useState(2);
     /* this is caused by the fact that you can't check 
     your radio buttons repeatadly --> set the ability 
     to check your buttons over and over again */
@@ -37,54 +38,64 @@ const Menue = () => {
         setSearchCheck({ searchCheck: !searchCheck });
     };
 
-    let menueOpenedNum = 0;
+    // let menueOpenedNum = 0;
     const handleMenueClick = () => {
         let menue = document.getElementsByClassName('favourites')[0];
         let options = document.getElementsByClassName(
             'menue-options-button'
         )[0];
+        let close = document.getElementsByClassName(
+            'menue-options-button-close'
+        )[0];
         if (menueOpenedNum % 2 == 0) {
             menue.style.visibility = 'visible';
             options.style.zIndex = '2';
-            menueOpenedNum++;
-        } else {
-            menue.style.visibility = 'hidden';
-            options.style.zIndex = '1';
-            menueOpenedNum++;
+            setMenueOpenedNum({ menueOpenedNum: menueOpenedNum + 1 });
+            console.log('setMenueOpenedNum fired');
+
         }
+        console.log('menueOpenedNum: ', menueOpenedNum);
+        if (menueOpenedNum % 2 == 1) { 
+            console.log('setMenueOpenedNum fired for close');
+            let options = document.createElement('img');
+            options.src = MenueButton;
+            options.className = "menue-options-button";
+            menue.style.visibility = "hidden"; 
+        }
+        setMenueOpenedNum(menueOpenedNum + 1);
     };
 
     const createMenueIcons = () => {
-        let menue = document.getElementsByClassName("menue-options-button-close");
+        let menue = document.getElementsByClassName(
+            'menue-options-button-close'
+        );
         console.log(menue);
         console.log(menueOpenedNum);
-        // menueOpenedNum++; // TODO: after this set onClick for the closing button ---> produces the error: cannot read null of undentified 
-        // menue.style.zIndex = '2';
-        return (
-            menueOpenedNum % 2 == 0 ? (
-                <img
+        // TODO: after this set onClick for the closing button ---> produces the error: cannot read null of undefined
+        return menueOpenedNum % 2 == 0 ? (
+            <img
                 className="menue-options-button"
                 src={MenueButton}
                 alt="menue button"
                 onClick={handleMenueClick}
-                />
-            ) : (
-                <img
+            />
+        ) : (
+            <img
                 className="menue-options-button-close"
                 src={FavouriteClose}
                 alt="menue button"
                 onClick={handleMenueClick}
-                />
-            )
+            />
         );
-    }
+    };
+
 
     return (
         <div className="menue">
             <div className="msi-control">
                 <div className="msi-title">MSI 2020</div>
                 <div className="options-button-container">
-                    {createMenueIcons(menueOpenedNum)}
+                    {createMenueIcons()}
                     <div className="options-title">Favourite</div>
                 </div>
             </div>
