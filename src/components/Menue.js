@@ -6,6 +6,7 @@ import CareerButton from '../assets/svg/CareerButton.svg';
 import CelebrityButton from '../assets/svg/CelebrityButton.svg';
 import DevButton from '../assets/svg/DevButton.svg';
 import FavouriteClose from '../assets/svg/FavouriteClose.svg';
+import ReactDOM from 'react-dom';
 
 const Menue = () => {
     //consider using useEffect hook
@@ -17,14 +18,16 @@ const Menue = () => {
     //     }
     // }, [input])
 
+    // const initialValue = [MainCard] //figure out how to set that iterable object (...)
+
+    // const initialValue = [{MainCard}];
     //true - display, false - hide
     const [randomCheck, setRandomCheck] = useState(false);
     const [categoriesCheck, setCategoriesCheck] = useState(false);
     const [searchCheck, setSearchCheck] = useState(false);
     const [menueOpenedNum, setMenueOpenedNum] = useState(2);
-    /* this is caused by the fact that you can't check 
-    your radio buttons repeatadly --> set the ability 
-    to check your buttons over and over again */
+    const [generatedCards, setGeneratedCards] = useState([]); //was initial value //you're not setting the array correctly
+    
 
     const handleRandomCheck = (e) => {
         setRandomCheck({ randomCheck: !randomCheck });
@@ -52,15 +55,14 @@ const Menue = () => {
             options.style.zIndex = '2';
             setMenueOpenedNum({ menueOpenedNum: menueOpenedNum + 1 });
             console.log('setMenueOpenedNum fired');
-
         }
         console.log('menueOpenedNum: ', menueOpenedNum);
-        if (menueOpenedNum % 2 == 1) { 
+        if (menueOpenedNum % 2 == 1) {
             console.log('setMenueOpenedNum fired for close');
             let options = document.createElement('img');
             options.src = MenueButton;
-            options.className = "menue-options-button";
-            menue.style.visibility = "hidden"; 
+            options.className = 'menue-options-button';
+            menue.style.visibility = 'hidden';
         }
         setMenueOpenedNum(menueOpenedNum + 1);
     };
@@ -89,6 +91,21 @@ const Menue = () => {
         );
     };
 
+    const handleGetJoke = () => {
+        // for now you'll implement only getting a random joke
+        fetch('https://api.chucknorris.io/jokes/random')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Joke: ', data.value);
+                //it's working but you need to add instead of replacing  the joke 
+                // you need to create an array of jokes and add new ones with that spread operator
+                // you can do that here, in the Menue component 
+                setGeneratedCards( [...generatedCards, <MainCard joke={data.value}/> ]);
+                // ReactDOM.render(<MainCard joke={data.value}/>, document.getElementsByClassName('generated-jokes-container')[0]);
+            });
+    };
 
     return (
         <div className="menue">
@@ -162,8 +179,12 @@ const Menue = () => {
                 </form>
             </div>
 
-            <button className="get-joke-btn">Get a joke</button>
-            <MainCard />
+            <button className="get-joke-btn" onClick={handleGetJoke}>
+                Get a joke
+            </button>
+            <div className="generated-jokes-container">
+                {generatedCards}
+            </div>
         </div>
     );
 };

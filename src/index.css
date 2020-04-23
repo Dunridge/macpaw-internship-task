@@ -349,7 +349,10 @@ html {
     .msi-control {
         display: flex;
         justify-content: space-evenly;
+        margin-right: -130px;
     }
+
+    
 
     .options-button-container {
         display: flex;
@@ -374,7 +377,7 @@ html {
         visibility: hidden;
         /* visibility: visible; */
         position: relative;
-        right: 685px;
+        right: 650px;
         z-index: 1;
     }
 }
@@ -447,5 +450,21 @@ html {
     .msi-title {
         margin-left: -365px;
     }
+
+    .search-container > input {
+      width: 310px;
+    }
     /* ------------------ */
+
+    /* favourites menu style */
+    #root > div > div.favourites {
+      width: 50px;
+      margin-left: 280px;
+    }
+
+    #root > div > div.favourites > * {
+      margin-right: -10px;
+      /* width: 380px; */
+    }
+    /* -------------- */
 }
