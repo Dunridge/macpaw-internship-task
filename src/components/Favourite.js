@@ -6,9 +6,7 @@ const Favourite = () => {
     return (
         <div className="favourite">
             <div className="favourite-title">Favourite</div>
-            <Card/>
-            <Card/>
-            <Card/>
+            
         </div>
     );
 };

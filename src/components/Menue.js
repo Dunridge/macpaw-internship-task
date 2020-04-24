@@ -8,27 +8,27 @@ import DevButton from '../assets/svg/DevButton.svg';
 import FavouriteClose from '../assets/svg/FavouriteClose.svg';
 import ReactDOM from 'react-dom';
 
-const Menue = () => {
-    //consider using useEffect hook
-    // call useEffect hook and when you choose another value, set the display value for CSS as none
-    // useEffect(() => { //
-    //     effect
-    //     return () => {
-    //         cleanup
-    //     }
-    // }, [input])
-
-    // const initialValue = [MainCard] //figure out how to set that iterable object (...)
-
-    // const initialValue = [{MainCard}];
+// TODO: you'll have to pass the liked cards up to the App component
+// and then pass them down to the favourites section and call setState
+const Menue = (props) => {
     //true - display, false - hide
     const [randomCheck, setRandomCheck] = useState(false);
     const [categoriesCheck, setCategoriesCheck] = useState(false);
     const [searchCheck, setSearchCheck] = useState(false);
     const [menueOpenedNum, setMenueOpenedNum] = useState(2);
-    const [generatedCards, setGeneratedCards] = useState([]); //was initial value //you're not setting the array correctly
-    
+    const [generatedCards, setGeneratedCards] = useState([]);
+    //defining the card like functionality
+    // const [cardLike, setCardLike] = useState(false);
+    // const [cardLikeCounter, setCardLikeCounter] = useState(1);
+    //set cards liked here
+    // const {
+    //     likedCards: [likedCards, setLikedCards]
+    // } = {
+    //     likedCards: useState([]),
+    //         ...(props.state || {}) //TODO --> but first you have to decompose it
+    // };
 
+    //Here you'll create a string for the kind of joke that you'll be querying and these handlers with set them off
     const handleRandomCheck = (e) => {
         setRandomCheck({ randomCheck: !randomCheck });
     };
@@ -41,7 +41,6 @@ const Menue = () => {
         setSearchCheck({ searchCheck: !searchCheck });
     };
 
-    // let menueOpenedNum = 0;
     const handleMenueClick = () => {
         let menue = document.getElementsByClassName('favourites')[0];
         let options = document.getElementsByClassName(
@@ -68,12 +67,6 @@ const Menue = () => {
     };
 
     const createMenueIcons = () => {
-        let menue = document.getElementsByClassName(
-            'menue-options-button-close'
-        );
-        console.log(menue);
-        console.log(menueOpenedNum);
-        // TODO: after this set onClick for the closing button ---> produces the error: cannot read null of undefined
         return menueOpenedNum % 2 == 0 ? (
             <img
                 className="menue-options-button"
@@ -92,19 +85,34 @@ const Menue = () => {
     };
 
     const handleGetJoke = () => {
-        // for now you'll implement only getting a random joke
-        fetch('https://api.chucknorris.io/jokes/random')
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                console.log('Joke: ', data.value);
-                //it's working but you need to add instead of replacing  the joke 
-                // you need to create an array of jokes and add new ones with that spread operator
-                // you can do that here, in the Menue component 
-                setGeneratedCards( [...generatedCards, <MainCard joke={data.value}/> ]);
-                // ReactDOM.render(<MainCard joke={data.value}/>, document.getElementsByClassName('generated-jokes-container')[0]);
-            });
+        /*
+        const [randomCheck, setRandomCheck] = useState(false);
+        const [categoriesCheck, setCategoriesCheck] = useState(false);
+        const [searchCheck, setSearchCheck] = useState(false);
+        */
+        //TODO: just switch through the booleans at the start of the function and get the joke you need
+        if (randomCheck) {
+            fetch('https://api.chucknorris.io/jokes/random')
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('Joke: ', data.value); //TODO: you'll have to remove handleCardLike
+                    // console.log(setCardLikeCounter);
+                    setGeneratedCards([
+                        ...generatedCards,
+                        <MainCard joke={data.value} />,
+                    ]);
+                });
+        }
+        if(categoriesCheck) {
+            // TODO: query for categories 
+            console.log('query for categories');
+        }
+        if (searchCheck) {
+            // TODO: query for search 
+            console.log('guery for search');
+        }
     };
 
     return (
@@ -182,11 +190,11 @@ const Menue = () => {
             <button className="get-joke-btn" onClick={handleGetJoke}>
                 Get a joke
             </button>
-            <div className="generated-jokes-container">
-                {generatedCards}
-            </div>
+            <div className="generated-jokes-container">{generatedCards}</div>
         </div>
     );
 };
+
+// TODO: create the handleLike function in the Menue and then pass it via props to the MainCard component
 
 export default Menue;

@@ -178,6 +178,12 @@ html {
     grid-row: 1;
 }
 
+#root > div > div.favourites > div > div > div > div.like-icon-contaner > img {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+
 .main-last-update {
     grid-column: 2/2;
     grid-row: 3;
