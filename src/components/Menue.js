@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import MainCard from './MainCard';
 import MenueButton from '../assets/svg/MenueButton.svg';
-import AnimalButton from '../assets/svg/AnimalButton.svg';
-import CareerButton from '../assets/svg/CareerButton.svg';
-import CelebrityButton from '../assets/svg/CelebrityButton.svg';
-import DevButton from '../assets/svg/DevButton.svg';
 import FavouriteClose from '../assets/svg/FavouriteClose.svg';
 import ReactDOM from 'react-dom';
+import CategoriesSelection from '../components/CategoriesSelection';
 
-// TODO: you'll have to pass the liked cards up to the App component
-// and then pass them down to the favourites section and call setState
 const Menue = (props) => {
     //true - display, false - hide
     const [randomCheck, setRandomCheck] = useState(false);
@@ -17,18 +12,16 @@ const Menue = (props) => {
     const [searchCheck, setSearchCheck] = useState(false);
     const [menueOpenedNum, setMenueOpenedNum] = useState(2);
     const [generatedCards, setGeneratedCards] = useState([]);
-    //defining the card like functionality
-    // const [cardLike, setCardLike] = useState(false);
-    // const [cardLikeCounter, setCardLikeCounter] = useState(1);
-    //set cards liked here
-    // const {
-    //     likedCards: [likedCards, setLikedCards]
-    // } = {
-    //     likedCards: useState([]),
-    //         ...(props.state || {}) //TODO --> but first you have to decompose it
-    // };
+    const [animalButtonActive, setAnimalButtonActive] = useState(false);
+    const [careerButtonActive, setCareerButtonActive] = useState(false);
+    const [celebrityButtonActive, setCelebrityButtonActive] = useState(false);
+    const [devButtonActive, setDevButtonActive] = useState(false);
+    const [animalButtonSelected, setAnimalButtonSelected] = useState(2);
+    const [careerButtonSelected, setCareerButtonSelected] = useState(2);
+    const [celebrityButtonSelected, setCelebrityButtonSelected] = useState(2);
+    const [devButtonSelected, setDevButtonSelected] = useState(2);
+    const [selectedCategory, setSelectedCategory] = useState('');
 
-    //Here you'll create a string for the kind of joke that you'll be querying and these handlers with set them off
     const handleRandomCheck = (e) => {
         setRandomCheck({ randomCheck: !randomCheck });
     };
@@ -105,14 +98,147 @@ const Menue = (props) => {
                     ]);
                 });
         }
-        if(categoriesCheck) {
-            // TODO: query for categories 
+        if (categoriesCheck) {
+            console.log('switch hit');
+            switch (selectedCategory) {
+                case 'animal-button':
+                    console.log('animal-button');
+                    fetch(
+                        'https://api.chucknorris.io/jokes/random?category=animal'
+                    )
+                        .then((response) => {
+                            return response.json();
+                        })
+                        .then((data) => {
+                            console.log('Joke: ', data.value); //TODO: you'll have to remove handleCardLike
+                            // console.log(setCardLikeCounter);
+                            setGeneratedCards([
+                                ...generatedCards,
+                                <MainCard joke={data.value} />,
+                            ]);
+                        });
+                    //request jokes from api here ---> use fetch
+                    break;
+
+                case 'career-button':
+                    console.log('career-button');
+                    fetch(
+                        'https://api.chucknorris.io/jokes/random?category=career'
+                    )
+                        .then((response) => {
+                            return response.json();
+                        })
+                        .then((data) => {
+                            console.log('Joke: ', data.value); //TODO: you'll have to remove handleCardLike
+                            // console.log(setCardLikeCounter);
+                            setGeneratedCards([
+                                ...generatedCards,
+                                <MainCard joke={data.value} />,
+                            ]);
+                        });
+                    //request jokes from api --> use fetch
+                    break;
+
+                case 'celebrity-button':
+                    console.log('celebrity-button');
+                    fetch(
+                        'https://api.chucknorris.io/jokes/random?category=celebrity'
+                    )
+                        .then((response) => {
+                            return response.json();
+                        })
+                        .then((data) => {
+                            console.log('Joke: ', data.value); //TODO: you'll have to remove handleCardLike
+                            // console.log(setCardLikeCounter);
+                            setGeneratedCards([
+                                ...generatedCards,
+                                <MainCard joke={data.value} />,
+                            ]);
+                        });
+                    //request jokes from api --> use fetch
+                    break;
+                case 'dev-button':
+                    console.log('dev-button');
+                    fetch(
+                        'https://api.chucknorris.io/jokes/random?category=dev'
+                    )
+                        .then((response) => {
+                            return response.json();
+                        })
+                        .then((data) => {
+                            console.log('Joke: ', data.value); //TODO: you'll have to remove handleCardLike
+                            // console.log(setCardLikeCounter);
+                            setGeneratedCards([
+                                ...generatedCards,
+                                <MainCard joke={data.value} />,
+                            ]);
+                        });
+                    //request jokes from api --> use fetch
+                    break;
+
+                // default:
+                //     break;
+            }
+            // TODO: query for categories
             console.log('query for categories');
         }
         if (searchCheck) {
-            // TODO: query for search 
+            // TODO: query for search
             console.log('guery for search');
         }
+    };
+
+    /*
+    const [animalButtonActive, setAnimalButtonActive] = useState(false);
+    const [careerButtonActive, setCareerButtonActive] = useState(false);
+    const [celebrityButtonActive, setCelebrityButtonActive] = useState(false);
+    const [devButtonActive, setDevButtonActive] = useState(false);
+    */
+
+    // TODO: later on raise the state to the App component and pass it here through props
+    const selectCategory = (e) => {
+        console.log(e.target.className);
+        switch (e.target.className) {
+            case 'animal-button':
+                animalButtonSelected % 2 === 0
+                    ? setAnimalButtonActive(true)
+                    : setAnimalButtonActive(false);
+                setAnimalButtonSelected(animalButtonSelected + 1);
+                console.log('click from animal button');
+                setSelectedCategory('animal-button');
+                break;
+
+            case 'career-button':
+                careerButtonSelected % 2 === 0
+                    ? setCareerButtonActive(true)
+                    : setCareerButtonActive(false);
+                setCareerButtonSelected(careerButtonSelected + 1);
+                console.log('click from career button');
+                setSelectedCategory('career-button');
+                break;
+
+            case 'celebrity-button':
+                celebrityButtonSelected % 2 === 0
+                    ? setCelebrityButtonActive(true)
+                    : setCelebrityButtonActive(false);
+                setCelebrityButtonSelected(celebrityButtonSelected + 1);
+                console.log('click from celebrity button');
+                setSelectedCategory('celebrity-button');
+                break;
+
+            case 'dev-button':
+                devButtonSelected % 2 === 0
+                    ? setDevButtonActive(true)
+                    : setDevButtonActive(false);
+                setDevButtonSelected(devButtonSelected + 1);
+                console.log('click from dev button');
+                setSelectedCategory('dev-button');
+                break;
+
+            // default:
+            //     break;
+        }
+        console.log('active button: ', selectedCategory);
     };
 
     return (
@@ -156,12 +282,13 @@ const Menue = (props) => {
                     />
                     <label for="from-categories">From categories</label>
                     {categoriesCheck ? (
-                        <div className="from-categories-container">
-                            <img src={AnimalButton} alt="menue button" />
-                            <img src={CareerButton} alt="menue button" />
-                            <img src={CelebrityButton} alt="menue button" />
-                            <img src={DevButton} alt="menue button" />
-                        </div>
+                        <CategoriesSelection
+                            selectCategory={selectCategory}
+                            animalButtonActive={animalButtonActive}
+                            careerButtonActive={careerButtonActive}
+                            celebrityButtonActive={celebrityButtonActive}
+                            devButtonActive={devButtonActive}
+                        />
                     ) : (
                         <div className="hide"></div>
                     )}

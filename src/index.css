@@ -260,9 +260,17 @@ html {
     padding-left: 40px;
 }
 
+.inline-block {
+    display: inline-block;
+}
+
 .card-grid {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
+}
+
+.from-categories-container > * {
+    display: inline-block;
 }
 
 .favourite-card {
