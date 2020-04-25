@@ -183,8 +183,27 @@ const Menue = (props) => {
             console.log('query for categories');
         }
         if (searchCheck) {
-            // TODO: query for search
-            console.log('guery for search');
+            // get current value from the input field and make the fetch 
+            let searchValue = document.getElementsByClassName('search-container-input')[0].value;
+            console.log(searchValue);
+            // TODO: query for search --> see that api to see how to do that 
+            // let testString = `we'll be searching for: ${searchValue}`;
+            // console.log(testString); //see how to set custom strings with `` signs
+            fetch(`https://api.chucknorris.io/jokes/search?query=${searchValue}`)
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((data) => {
+                        let randomNum = Math.floor(Math.random()*100);
+                        // console.log('randomNum: ', randomNum);
+                        let joke = data.result[randomNum].value;
+                        console.log(data.result[randomNum].value);
+                        setGeneratedCards([
+                            ...generatedCards,
+                            <MainCard joke={joke} />,
+                        ]);
+                    }) 
+
         }
     };
 
@@ -306,6 +325,7 @@ const Menue = (props) => {
                             <input
                                 type="text"
                                 placeholder="Free text search..."
+                                className="search-container-input"
                             />
                         </div>
                     ) : (
