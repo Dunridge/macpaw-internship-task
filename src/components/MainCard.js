@@ -30,9 +30,7 @@ const MainCard = (props) => {
         setCardLikeCounter(cardLikeCounter + 1);
     };
 
-    return ( // TODO: liked joke cards don't get rerendered 
-             // --> a copy of them is created and passed to the favourites section  
-             // --> go to the handleCardJoke function in the MainCard component and work on that functionality  
+    return (   
         <div className="main-card-grid main-card">
             <div className="message-button-container">
                 <img src={MessageButton} alt="message button" />

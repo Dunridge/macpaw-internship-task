@@ -78,20 +78,13 @@ const Menue = (props) => {
     };
 
     const handleGetJoke = () => {
-        /*
-        const [randomCheck, setRandomCheck] = useState(false);
-        const [categoriesCheck, setCategoriesCheck] = useState(false);
-        const [searchCheck, setSearchCheck] = useState(false);
-        */
-        //TODO: just switch through the booleans at the start of the function and get the joke you need
         if (randomCheck) {
             fetch('https://api.chucknorris.io/jokes/random')
                 .then((response) => {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log('Joke: ', data.value); //TODO: you'll have to remove handleCardLike
-                    // console.log(setCardLikeCounter);
+                    console.log('Joke: ', data.value); 
                     setGeneratedCards([
                         ...generatedCards,
                         <MainCard joke={data.value} />,
@@ -110,14 +103,12 @@ const Menue = (props) => {
                             return response.json();
                         })
                         .then((data) => {
-                            console.log('Joke: ', data.value); //TODO: you'll have to remove handleCardLike
-                            // console.log(setCardLikeCounter);
+                            console.log('Joke: ', data.value);
                             setGeneratedCards([
                                 ...generatedCards,
                                 <MainCard joke={data.value} />,
                             ]);
                         });
-                    //request jokes from api here ---> use fetch
                     break;
 
                 case 'career-button':
@@ -129,14 +120,12 @@ const Menue = (props) => {
                             return response.json();
                         })
                         .then((data) => {
-                            console.log('Joke: ', data.value); //TODO: you'll have to remove handleCardLike
-                            // console.log(setCardLikeCounter);
+                            console.log('Joke: ', data.value); 
                             setGeneratedCards([
                                 ...generatedCards,
                                 <MainCard joke={data.value} />,
                             ]);
                         });
-                    //request jokes from api --> use fetch
                     break;
 
                 case 'celebrity-button':
@@ -148,14 +137,12 @@ const Menue = (props) => {
                             return response.json();
                         })
                         .then((data) => {
-                            console.log('Joke: ', data.value); //TODO: you'll have to remove handleCardLike
-                            // console.log(setCardLikeCounter);
+                            console.log('Joke: ', data.value); 
                             setGeneratedCards([
                                 ...generatedCards,
                                 <MainCard joke={data.value} />,
                             ]);
                         });
-                    //request jokes from api --> use fetch
                     break;
                 case 'dev-button':
                     console.log('dev-button');
@@ -166,29 +153,20 @@ const Menue = (props) => {
                             return response.json();
                         })
                         .then((data) => {
-                            console.log('Joke: ', data.value); //TODO: you'll have to remove handleCardLike
-                            // console.log(setCardLikeCounter);
+                            console.log('Joke: ', data.value); 
                             setGeneratedCards([
                                 ...generatedCards,
                                 <MainCard joke={data.value} />,
                             ]);
                         });
-                    //request jokes from api --> use fetch
                     break;
-
-                // default:
-                //     break;
             }
-            // TODO: query for categories
             console.log('query for categories');
         }
         if (searchCheck) {
-            // get current value from the input field and make the fetch 
             let searchValue = document.getElementsByClassName('search-container-input')[0].value;
             console.log(searchValue);
-            // TODO: query for search --> see that api to see how to do that 
-            // let testString = `we'll be searching for: ${searchValue}`;
-            // console.log(testString); //see how to set custom strings with `` signs
+            
             fetch(`https://api.chucknorris.io/jokes/search?query=${searchValue}`)
                     .then((response) => {
                         return response.json()
@@ -207,14 +185,6 @@ const Menue = (props) => {
         }
     };
 
-    /*
-    const [animalButtonActive, setAnimalButtonActive] = useState(false);
-    const [careerButtonActive, setCareerButtonActive] = useState(false);
-    const [celebrityButtonActive, setCelebrityButtonActive] = useState(false);
-    const [devButtonActive, setDevButtonActive] = useState(false);
-    */
-
-    // TODO: later on raise the state to the App component and pass it here through props
     const selectCategory = (e) => {
         console.log(e.target.className);
         switch (e.target.className) {
@@ -253,9 +223,6 @@ const Menue = (props) => {
                 console.log('click from dev button');
                 setSelectedCategory('dev-button');
                 break;
-
-            // default:
-            //     break;
         }
         console.log('active button: ', selectedCategory);
     };
@@ -341,7 +308,5 @@ const Menue = (props) => {
         </div>
     );
 };
-
-// TODO: create the handleLike function in the Menue and then pass it via props to the MainCard component
 
 export default Menue;
