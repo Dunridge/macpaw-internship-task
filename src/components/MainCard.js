@@ -7,7 +7,6 @@ import Card from '../components/Card';
 import ReactDOM from 'react-dom';
 
 const MainCard = (props) => {
-    //you'll have to define them in the menue and pass them here via props
     const [cardLike, setCardLike] = useState(false);
     const [cardLikeCounter, setCardLikeCounter] = useState(1);
 
@@ -20,7 +19,7 @@ const MainCard = (props) => {
             console.log(setCardLike);
             setCardLike(true);
             let newFavouriteCardDiv = document.createElement('div');
-            newFavouriteCardDiv.className = "new-favourite-card" + '-' + Math.random().toString(36).substr(2,9);
+            newFavouriteCardDiv.className = "new-favourite-card-"+ Math.random().toString(36).substr(2,9);
             document.getElementsByClassName('favourite')[0].appendChild(newFavouriteCardDiv);
             ReactDOM.render(<Card joke={props.joke}/>, document.getElementsByClassName(newFavouriteCardDiv.className)[0]) 
         }

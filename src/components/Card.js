@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import LikeButton from '../assets/svg/LikeButton.svg';
-import EmptyLikeButton from '../assets/svg/EmptyLikeButton.svg';
+// import EmptyLikeButton from '../assets/svg/EmptyLikeButton.svg'; 
 import MessageButton from '../assets/svg/MessageButton.svg';
 
-// TODO: use Context API and hooks to pass around data
-// TODO: you'll pass cards here that will aready be liked --> you don't have to implement the like functionality
 const Card = (props) => {
 
     return (

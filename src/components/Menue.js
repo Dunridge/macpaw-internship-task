@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import MainCard from './MainCard';
 import MenueButton from '../assets/svg/MenueButton.svg';
 import FavouriteClose from '../assets/svg/FavouriteClose.svg';
-import ReactDOM from 'react-dom';
 import CategoriesSelection from '../components/CategoriesSelection';
 
 const Menue = (props) => {
@@ -39,17 +38,14 @@ const Menue = (props) => {
         let options = document.getElementsByClassName(
             'menue-options-button'
         )[0];
-        let close = document.getElementsByClassName(
-            'menue-options-button-close'
-        )[0];
-        if (menueOpenedNum % 2 == 0) {
+        if (menueOpenedNum % 2 === 0) {
             menue.style.visibility = 'visible';
             options.style.zIndex = '2';
             setMenueOpenedNum({ menueOpenedNum: menueOpenedNum + 1 });
             console.log('setMenueOpenedNum fired');
         }
         console.log('menueOpenedNum: ', menueOpenedNum);
-        if (menueOpenedNum % 2 == 1) {
+        if (menueOpenedNum % 2 === 1) {
             console.log('setMenueOpenedNum fired for close');
             let options = document.createElement('img');
             options.src = MenueButton;
@@ -60,7 +56,7 @@ const Menue = (props) => {
     };
 
     const createMenueIcons = () => {
-        return menueOpenedNum % 2 == 0 ? (
+        return menueOpenedNum % 2 === 0 ? (
             <img
                 className="menue-options-button"
                 src={MenueButton}
@@ -84,7 +80,7 @@ const Menue = (props) => {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log('Joke: ', data.value); 
+                    console.log('Joke: ', data.value);
                     setGeneratedCards([
                         ...generatedCards,
                         <MainCard joke={data.value} />,
@@ -120,7 +116,7 @@ const Menue = (props) => {
                             return response.json();
                         })
                         .then((data) => {
-                            console.log('Joke: ', data.value); 
+                            console.log('Joke: ', data.value);
                             setGeneratedCards([
                                 ...generatedCards,
                                 <MainCard joke={data.value} />,
@@ -137,7 +133,7 @@ const Menue = (props) => {
                             return response.json();
                         })
                         .then((data) => {
-                            console.log('Joke: ', data.value); 
+                            console.log('Joke: ', data.value);
                             setGeneratedCards([
                                 ...generatedCards,
                                 <MainCard joke={data.value} />,
@@ -153,35 +149,48 @@ const Menue = (props) => {
                             return response.json();
                         })
                         .then((data) => {
-                            console.log('Joke: ', data.value); 
+                            console.log('Joke: ', data.value);
                             setGeneratedCards([
                                 ...generatedCards,
                                 <MainCard joke={data.value} />,
                             ]);
                         });
                     break;
+                default:
+                    console.log('default');
+                    break;
             }
             console.log('query for categories');
         }
         if (searchCheck) {
-            let searchValue = document.getElementsByClassName('search-container-input')[0].value;
+            let searchValue = document.getElementsByClassName(
+                'search-container-input'
+            )[0].value;
             console.log(searchValue);
-            
-            fetch(`https://api.chucknorris.io/jokes/search?query=${searchValue}`)
-                    .then((response) => {
-                        return response.json()
-                    })
-                    .then((data) => {
-                        let randomNum = Math.floor(Math.random()*100);
-                        // console.log('randomNum: ', randomNum);
-                        let joke = data.result[randomNum].value;
-                        console.log(data.result[randomNum].value);
-                        setGeneratedCards([
-                            ...generatedCards,
-                            <MainCard joke={joke} />,
-                        ]);
-                    }) 
 
+            fetch(
+                `https://api.chucknorris.io/jokes/search?query=${searchValue}`
+            )
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    let randomNum = Math.floor(Math.random() * 100);
+                    let joke = data.result[randomNum].value;
+                    console.log(data.result[randomNum].value);
+                    setGeneratedCards([
+                        ...generatedCards,
+                        <MainCard joke={joke} />,
+                    ]);
+                })
+                .catch((error) => {
+                    let input = document.getElementsByClassName(
+                        'search-container-input'
+                    )[0];
+                    alert('Invalid input');
+                    input.value = '';
+                    console.log(error);
+                });
         }
     };
 
@@ -192,6 +201,10 @@ const Menue = (props) => {
                 animalButtonSelected % 2 === 0
                     ? setAnimalButtonActive(true)
                     : setAnimalButtonActive(false);
+                
+                setCareerButtonActive(false);
+                setCelebrityButtonActive(false);
+                setDevButtonActive(false);
                 setAnimalButtonSelected(animalButtonSelected + 1);
                 console.log('click from animal button');
                 setSelectedCategory('animal-button');
@@ -201,6 +214,10 @@ const Menue = (props) => {
                 careerButtonSelected % 2 === 0
                     ? setCareerButtonActive(true)
                     : setCareerButtonActive(false);
+
+                setAnimalButtonActive(false);
+                setCelebrityButtonActive(false);
+                setDevButtonActive(false);
                 setCareerButtonSelected(careerButtonSelected + 1);
                 console.log('click from career button');
                 setSelectedCategory('career-button');
@@ -210,6 +227,10 @@ const Menue = (props) => {
                 celebrityButtonSelected % 2 === 0
                     ? setCelebrityButtonActive(true)
                     : setCelebrityButtonActive(false);
+                
+                setAnimalButtonActive(false);
+                setCareerButtonActive(false);
+                setDevButtonActive(false);
                 setCelebrityButtonSelected(celebrityButtonSelected + 1);
                 console.log('click from celebrity button');
                 setSelectedCategory('celebrity-button');
@@ -219,13 +240,25 @@ const Menue = (props) => {
                 devButtonSelected % 2 === 0
                     ? setDevButtonActive(true)
                     : setDevButtonActive(false);
+                setAnimalButtonActive(false);
+                setCareerButtonActive(false);
+                setCelebrityButtonActive(false);
                 setDevButtonSelected(devButtonSelected + 1);
                 console.log('click from dev button');
                 setSelectedCategory('dev-button');
                 break;
+
+            default: 
+                console.log('default');
+                break;
         }
         console.log('active button: ', selectedCategory);
     };
+
+
+    /*
+    props.createMenueIcons()
+    */
 
     return (
         <div className="menue">

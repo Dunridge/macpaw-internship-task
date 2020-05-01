@@ -1,12 +1,8 @@
 import React from 'react';
 import Menue from './components/Menue';
-import Card from './components/Card';
 import Favourite from './components/Favourite';
 
 function App() {
-    let app = document.getElementsByClassName('app')
-    console.log('app: ', app);
-    //app.srollLeft = 1000;
     
     return (
         <div className="app grid">
