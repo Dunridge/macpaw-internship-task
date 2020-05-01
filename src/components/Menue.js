@@ -1,271 +1,75 @@
-import React, { useState } from 'react';
-import MainCard from './MainCard';
-import MenueButton from '../assets/svg/MenueButton.svg';
-import FavouriteClose from '../assets/svg/FavouriteClose.svg';
+import React from 'react';
 import CategoriesSelection from '../components/CategoriesSelection';
 
 const Menue = (props) => {
-    //true - display, false - hide
-    const [randomCheck, setRandomCheck] = useState(false);
-    const [categoriesCheck, setCategoriesCheck] = useState(false);
-    const [searchCheck, setSearchCheck] = useState(false);
-    const [menueOpenedNum, setMenueOpenedNum] = useState(2);
-    const [generatedCards, setGeneratedCards] = useState([]);
-    const [animalButtonActive, setAnimalButtonActive] = useState(false);
-    const [careerButtonActive, setCareerButtonActive] = useState(false);
-    const [celebrityButtonActive, setCelebrityButtonActive] = useState(false);
-    const [devButtonActive, setDevButtonActive] = useState(false);
-    const [animalButtonSelected, setAnimalButtonSelected] = useState(2);
-    const [careerButtonSelected, setCareerButtonSelected] = useState(2);
-    const [celebrityButtonSelected, setCelebrityButtonSelected] = useState(2);
-    const [devButtonSelected, setDevButtonSelected] = useState(2);
-    const [selectedCategory, setSelectedCategory] = useState('');
-
-    const handleRandomCheck = (e) => {
-        setRandomCheck({ randomCheck: !randomCheck });
-    };
-
-    const handleCategoriesCheck = (e) => {
-        setCategoriesCheck({ categoriesCheck: !categoriesCheck });
-    };
-
-    const handleSearchCheck = (e) => {
-        setSearchCheck({ searchCheck: !searchCheck });
-    };
-
-    const handleMenueClick = () => {
-        let menue = document.getElementsByClassName('favourites')[0];
-        let options = document.getElementsByClassName(
-            'menue-options-button'
-        )[0];
-        if (menueOpenedNum % 2 === 0) {
-            menue.style.visibility = 'visible';
-            options.style.zIndex = '2';
-            setMenueOpenedNum({ menueOpenedNum: menueOpenedNum + 1 });
-            console.log('setMenueOpenedNum fired');
-        }
-        console.log('menueOpenedNum: ', menueOpenedNum);
-        if (menueOpenedNum % 2 === 1) {
-            console.log('setMenueOpenedNum fired for close');
-            let options = document.createElement('img');
-            options.src = MenueButton;
-            options.className = 'menue-options-button';
-            menue.style.visibility = 'hidden';
-        }
-        setMenueOpenedNum(menueOpenedNum + 1);
-    };
-
-    const createMenueIcons = () => {
-        return menueOpenedNum % 2 === 0 ? (
-            <img
-                className="menue-options-button"
-                src={MenueButton}
-                alt="menue button"
-                onClick={handleMenueClick}
-            />
-        ) : (
-            <img
-                className="menue-options-button-close"
-                src={FavouriteClose}
-                alt="menue button"
-                onClick={handleMenueClick}
-            />
-        );
-    };
-
-    const handleGetJoke = () => {
-        if (randomCheck) {
-            fetch('https://api.chucknorris.io/jokes/random')
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    console.log('Joke: ', data.value);
-                    setGeneratedCards([
-                        ...generatedCards,
-                        <MainCard joke={data.value} />,
-                    ]);
-                });
-        }
-        if (categoriesCheck) {
-            console.log('switch hit');
-            switch (selectedCategory) {
-                case 'animal-button':
-                    console.log('animal-button');
-                    fetch(
-                        'https://api.chucknorris.io/jokes/random?category=animal'
-                    )
-                        .then((response) => {
-                            return response.json();
-                        })
-                        .then((data) => {
-                            console.log('Joke: ', data.value);
-                            setGeneratedCards([
-                                ...generatedCards,
-                                <MainCard joke={data.value} />,
-                            ]);
-                        });
-                    break;
-
-                case 'career-button':
-                    console.log('career-button');
-                    fetch(
-                        'https://api.chucknorris.io/jokes/random?category=career'
-                    )
-                        .then((response) => {
-                            return response.json();
-                        })
-                        .then((data) => {
-                            console.log('Joke: ', data.value);
-                            setGeneratedCards([
-                                ...generatedCards,
-                                <MainCard joke={data.value} />,
-                            ]);
-                        });
-                    break;
-
-                case 'celebrity-button':
-                    console.log('celebrity-button');
-                    fetch(
-                        'https://api.chucknorris.io/jokes/random?category=celebrity'
-                    )
-                        .then((response) => {
-                            return response.json();
-                        })
-                        .then((data) => {
-                            console.log('Joke: ', data.value);
-                            setGeneratedCards([
-                                ...generatedCards,
-                                <MainCard joke={data.value} />,
-                            ]);
-                        });
-                    break;
-                case 'dev-button':
-                    console.log('dev-button');
-                    fetch(
-                        'https://api.chucknorris.io/jokes/random?category=dev'
-                    )
-                        .then((response) => {
-                            return response.json();
-                        })
-                        .then((data) => {
-                            console.log('Joke: ', data.value);
-                            setGeneratedCards([
-                                ...generatedCards,
-                                <MainCard joke={data.value} />,
-                            ]);
-                        });
-                    break;
-                default:
-                    console.log('default');
-                    break;
-            }
-            console.log('query for categories');
-        }
-        if (searchCheck) {
-            let searchValue = document.getElementsByClassName(
-                'search-container-input'
-            )[0].value;
-            console.log(searchValue);
-
-            fetch(
-                `https://api.chucknorris.io/jokes/search?query=${searchValue}`
-            )
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    let randomNum = Math.floor(Math.random() * 100);
-                    let joke = data.result[randomNum].value;
-                    console.log(data.result[randomNum].value);
-                    setGeneratedCards([
-                        ...generatedCards,
-                        <MainCard joke={joke} />,
-                    ]);
-                })
-                .catch((error) => {
-                    let input = document.getElementsByClassName(
-                        'search-container-input'
-                    )[0];
-                    alert('Invalid input');
-                    input.value = '';
-                    console.log(error);
-                });
-        }
-    };
 
     const selectCategory = (e) => {
         console.log(e.target.className);
         switch (e.target.className) {
             case 'animal-button':
-                animalButtonSelected % 2 === 0
-                    ? setAnimalButtonActive(true)
-                    : setAnimalButtonActive(false);
+                props.animalButtonSelected % 2 === 0
+                    ? props.setAnimalButtonActive(true)
+                    : props.setAnimalButtonActive(false);
                 
-                setCareerButtonActive(false);
-                setCelebrityButtonActive(false);
-                setDevButtonActive(false);
-                setAnimalButtonSelected(animalButtonSelected + 1);
+                props.setCareerButtonActive(false);
+                props.setCelebrityButtonActive(false);
+                props.setDevButtonActive(false);
+                props.setAnimalButtonSelected(props.animalButtonSelected + 1);
                 console.log('click from animal button');
-                setSelectedCategory('animal-button');
+                props.setSelectedCategory('animal-button');
                 break;
 
             case 'career-button':
-                careerButtonSelected % 2 === 0
-                    ? setCareerButtonActive(true)
-                    : setCareerButtonActive(false);
+                props.careerButtonSelected % 2 === 0
+                    ? props.setCareerButtonActive(true)
+                    : props.setCareerButtonActive(false);
 
-                setAnimalButtonActive(false);
-                setCelebrityButtonActive(false);
-                setDevButtonActive(false);
-                setCareerButtonSelected(careerButtonSelected + 1);
+                props.setAnimalButtonActive(false);
+                props.setCelebrityButtonActive(false);
+                props.setDevButtonActive(false);
+                props.setCareerButtonSelected(props.careerButtonSelected + 1);
                 console.log('click from career button');
-                setSelectedCategory('career-button');
+                props.setSelectedCategory('career-button');
                 break;
 
             case 'celebrity-button':
-                celebrityButtonSelected % 2 === 0
-                    ? setCelebrityButtonActive(true)
-                    : setCelebrityButtonActive(false);
+                props.celebrityButtonSelected % 2 === 0
+                    ? props.setCelebrityButtonActive(true)
+                    : props.setCelebrityButtonActive(false);
                 
-                setAnimalButtonActive(false);
-                setCareerButtonActive(false);
-                setDevButtonActive(false);
-                setCelebrityButtonSelected(celebrityButtonSelected + 1);
+                props.setAnimalButtonActive(false);
+                props.setCareerButtonActive(false);
+                props.setDevButtonActive(false);
+                props.setCelebrityButtonSelected(props.celebrityButtonSelected + 1);
                 console.log('click from celebrity button');
-                setSelectedCategory('celebrity-button');
+                props.setSelectedCategory('celebrity-button');
                 break;
 
             case 'dev-button':
-                devButtonSelected % 2 === 0
-                    ? setDevButtonActive(true)
-                    : setDevButtonActive(false);
-                setAnimalButtonActive(false);
-                setCareerButtonActive(false);
-                setCelebrityButtonActive(false);
-                setDevButtonSelected(devButtonSelected + 1);
+                props.devButtonSelected % 2 === 0
+                    ? props.setDevButtonActive(true)
+                    : props.setDevButtonActive(false);
+                props.setAnimalButtonActive(false);
+                props.setCareerButtonActive(false);
+                props.setCelebrityButtonActive(false);
+                props.setDevButtonSelected(props.devButtonSelected + 1);
                 console.log('click from dev button');
-                setSelectedCategory('dev-button');
+                props.setSelectedCategory('dev-button');
                 break;
 
             default: 
                 console.log('default');
                 break;
         }
-        console.log('active button: ', selectedCategory);
+        console.log('active button: ', props.selectedCategory);
     };
-
-
-    /*
-    props.createMenueIcons()
-    */
 
     return (
         <div className="menue">
             <div className="msi-control">
                 <div className="msi-title">MSI 2020</div>
                 <div className="options-button-container">
-                    {createMenueIcons()}
+                    {props.createMenueIcons()}
                     <div className="options-title">Favourite</div>
                 </div>
             </div>
@@ -282,10 +86,10 @@ const Menue = (props) => {
                         id="random"
                         name="options"
                         value="random"
-                        onClick={handleRandomCheck}
+                        onClick={props.handleRandomCheck}
                     />
                     <label for="random">Random</label>
-                    {randomCheck ? (
+                    {props.randomCheck ? (
                         <div style={{ display: 'none' }}>Hi</div>
                     ) : (
                         <div style={{ display: 'none' }}>Bye</div>
@@ -297,16 +101,16 @@ const Menue = (props) => {
                         id="from-categories"
                         name="options"
                         value="from categories"
-                        onClick={handleCategoriesCheck}
+                        onClick={props.handleCategoriesCheck}
                     />
                     <label for="from-categories">From categories</label>
-                    {categoriesCheck ? (
+                    {props.categoriesCheck ? (
                         <CategoriesSelection
                             selectCategory={selectCategory}
-                            animalButtonActive={animalButtonActive}
-                            careerButtonActive={careerButtonActive}
-                            celebrityButtonActive={celebrityButtonActive}
-                            devButtonActive={devButtonActive}
+                            animalButtonActive={props.animalButtonActive}
+                            careerButtonActive={props.careerButtonActive}
+                            celebrityButtonActive={props.celebrityButtonActive}
+                            devButtonActive={props.devButtonActive}
                         />
                     ) : (
                         <div className="hide"></div>
@@ -317,10 +121,10 @@ const Menue = (props) => {
                         id="search"
                         name="options"
                         value="search"
-                        onClick={handleSearchCheck}
+                        onClick={props.handleSearchCheck}
                     />
                     <label for="search">Search</label>
-                    {searchCheck ? (
+                    {props.searchCheck ? (
                         <div className="search-container">
                             <input
                                 type="text"
@@ -334,10 +138,10 @@ const Menue = (props) => {
                 </form>
             </div>
 
-            <button className="get-joke-btn" onClick={handleGetJoke}>
+            <button className="get-joke-btn" onClick={props.handleGetJoke}>
                 Get a joke
             </button>
-            <div className="generated-jokes-container">{generatedCards}</div>
+            <div className="generated-jokes-container">{props.generatedCards}</div>
         </div>
     );
 };

@@ -18,10 +18,28 @@ const MainCard = (props) => {
             console.log('if fired');
             console.log(setCardLike);
             setCardLike(true);
+            // and theoretically speaking you won't need this code:
             let newFavouriteCardDiv = document.createElement('div');
-            newFavouriteCardDiv.className = "new-favourite-card-"+ Math.random().toString(36).substr(2,9);
-            document.getElementsByClassName('favourite')[0].appendChild(newFavouriteCardDiv);
-            ReactDOM.render(<Card joke={props.joke}/>, document.getElementsByClassName(newFavouriteCardDiv.className)[0]) 
+            newFavouriteCardDiv.className =
+                'new-favourite-card-' + Math.random().toString(36).substr(2, 9);
+            document
+                .getElementsByClassName('favourite')[0]
+                .appendChild(newFavouriteCardDiv);
+            // ----------------------
+            /*
+            TODO: you've raised the state to the app and now you'll have to create
+            a favourite jokes container array in the App component, pass it to the
+            MainCard via props and here, in the handleCardLike method of the MainCard
+            component, set the state for that container and add new liked cards, then 
+            deleted that card by id
+            */
+
+            ReactDOM.render(
+                <Card joke={props.joke} />,
+                document.getElementsByClassName(
+                    newFavouriteCardDiv.className
+                )[0]
+            );
         }
         if (cardLikeCounter % 2 === 0) {
             setCardLike(false);
@@ -29,7 +47,7 @@ const MainCard = (props) => {
         setCardLikeCounter(cardLikeCounter + 1);
     };
 
-    return (   
+    return (
         <div className="main-card-grid main-card">
             <div className="message-button-container">
                 <img src={MessageButton} alt="message button" />
