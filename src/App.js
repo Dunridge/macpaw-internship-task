@@ -1,18 +1,22 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Menue from './components/Menue';
 import Favourite from './components/Favourite';
 //testing imports
-// import Card from './components/Card';
+import Card from './components/Card';
 import MainCard from './components/MainCard';
 import MenueButton from './assets/svg/MenueButton.svg';
 import FavouriteClose from './assets/svg/FavouriteClose.svg';
 //imports everything correctly...
 
 function App() {
-    
     /*
     TODO: raise all of the variables and functions here and pass it down to Favourite section and then 
-    change that ReactDOM.render code to setState for a card array in the Favourite section 
+    change that ReactDOM.render code to setState for a card array in the Favourite section
+    
+    TODO: (1.3.5(2)) TODO: you've raised the state to the app and now you'll have to create a favourite
+    jokes container array in the App component, pass it to the MainCard via props and here, in the 
+    handleCardLike method of the MainCard component, set the state for that container and add new 
+    liked cards, then deleted that card by id when it get disliked (!!!) (...)
     */
 
     // console.log(<Card/>);
@@ -23,8 +27,28 @@ function App() {
     const [searchCheck, setSearchCheck] = useState(false);
     const [menueOpenedNum, setMenueOpenedNum] = useState(2);
 
-    // TODO: now you need to pass them to the favourites component 
+    // TODO: now you need to pass them to the favourites component
+    // TODO: you need to raise setCardLike here and add the card to the array
     const [generatedCards, setGeneratedCards] = useState([]);
+
+    //liked cards to be displayed in Favourites
+    const [favouriteCards, setFavouriteCards] = useState([]); //favouriteCards is not iterable
+    // setFavouriteCards([...favouriteCards, <Card joke = "test" />])
+
+    console.log(favouriteCards); 
+
+    const setFavourite = (joke) => { //you need to pass JSX as parameters 
+        setFavouriteCards([
+            ...favouriteCards, <Card joke={joke}/>
+        ]);
+    }
+
+    //se how to set the state in generatedCards
+
+
+    // you have to pass the handleCardlike function from the app to the MainCard
+    // --> but now you have to think about the identity for the cards
+    //---------------
 
     const [animalButtonActive, setAnimalButtonActive] = useState(false);
     const [careerButtonActive, setCareerButtonActive] = useState(false);
@@ -35,7 +59,6 @@ function App() {
     const [celebrityButtonSelected, setCelebrityButtonSelected] = useState(2);
     const [devButtonSelected, setDevButtonSelected] = useState(2);
     const [selectedCategory, setSelectedCategory] = useState('');
-    
 
     const handleRandomCheck = (e) => {
         setRandomCheck({ randomCheck: !randomCheck });
@@ -99,7 +122,7 @@ function App() {
                     console.log('Joke: ', data.value);
                     setGeneratedCards([
                         ...generatedCards,
-                        <MainCard joke={data.value} />,
+                        <MainCard joke={data.value} setFavourite={setFavourite} />,
                     ]);
                 });
         }
@@ -118,7 +141,7 @@ function App() {
                             console.log('Joke: ', data.value);
                             setGeneratedCards([
                                 ...generatedCards,
-                                <MainCard joke={data.value} />,
+                                <MainCard joke={data.value} setFavourite={setFavourite} />,
                             ]);
                         });
                     break;
@@ -135,7 +158,7 @@ function App() {
                             console.log('Joke: ', data.value);
                             setGeneratedCards([
                                 ...generatedCards,
-                                <MainCard joke={data.value} />,
+                                <MainCard joke={data.value} setFavourite={setFavourite}/>,
                             ]);
                         });
                     break;
@@ -152,7 +175,7 @@ function App() {
                             console.log('Joke: ', data.value);
                             setGeneratedCards([
                                 ...generatedCards,
-                                <MainCard joke={data.value} />,
+                                <MainCard joke={data.value} setFavourite={setFavourite}/>,
                             ]);
                         });
                     break;
@@ -168,7 +191,7 @@ function App() {
                             console.log('Joke: ', data.value);
                             setGeneratedCards([
                                 ...generatedCards,
-                                <MainCard joke={data.value} />,
+                                <MainCard joke={data.value} setFavourite={setFavourite}/>,
                             ]);
                         });
                     break;
@@ -196,7 +219,7 @@ function App() {
                     console.log(data.result[randomNum].value);
                     setGeneratedCards([
                         ...generatedCards,
-                        <MainCard joke={joke} />,
+                        <MainCard joke={joke} setFavourite={setFavourite}/>,
                     ]);
                 })
                 .catch((error) => {
@@ -209,8 +232,6 @@ function App() {
                 });
         }
     };
-
-    
 
     /*
     const [randomCheck, setRandomCheck] = useState(false);
@@ -232,39 +253,49 @@ function App() {
     return (
         <div className="app grid">
             <div className="main-section">
-                <Menue randomCheck = {randomCheck}
-                       categoriesCheck = {categoriesCheck}
-                       searchCheck = {searchCheck}
-                       menueOpenedNum = {menueOpenedNum}
-                       generatedCards = {generatedCards}
-                       animalButtonActive = {animalButtonActive}
-                       careerButtonActive = {careerButtonActive}
-                       celebrityButtonActive = {celebrityButtonActive}
-                       devButtonActive = {devButtonActive}
-                       animalButtonSelected = {animalButtonSelected}
-                       careerButtonSelected = {careerButtonSelected}
-                       celebrityButtonSelected = {celebrityButtonSelected}
-                       devButtonSelected = {devButtonSelected}
-                       selectedCategory = {selectedCategory}
-                       createMenueIcons = {createMenueIcons}
-                       handleRandomCheck = {handleRandomCheck}
-                       handleCategoriesCheck = {handleCategoriesCheck}
-                       handleSearchCheck = {handleSearchCheck}
-                       handleGetJoke = {handleGetJoke}
-                       setCareerButtonActive = {setCareerButtonActive}
-                       setCareerButtonSelected = {setCareerButtonSelected}
-                       setCelebrityButtonSelected = {setCelebrityButtonSelected}
-                       setDevButtonSelected = {setDevButtonSelected}
-                       setCelebrityButtonActive = {setCelebrityButtonActive}
-                       setDevButtonActive = {setDevButtonActive}
-                       setAnimalButtonActive = {setAnimalButtonActive}
-                       setAnimalButtonSelected = {setAnimalButtonSelected}
-                       setSelectedCategory = {setSelectedCategory}
-                        />
+                {/* const [favouriteCards, setFavouriteCards] = useState([]); */}
+                <Menue
+                    randomCheck={randomCheck}
+                    categoriesCheck={categoriesCheck}
+                    searchCheck={searchCheck}
+                    menueOpenedNum={menueOpenedNum}
+                    generatedCards={generatedCards}
+                    animalButtonActive={animalButtonActive}
+                    careerButtonActive={careerButtonActive}
+                    celebrityButtonActive={celebrityButtonActive}
+                    devButtonActive={devButtonActive}
+                    animalButtonSelected={animalButtonSelected}
+                    careerButtonSelected={careerButtonSelected}
+                    celebrityButtonSelected={celebrityButtonSelected}
+                    devButtonSelected={devButtonSelected}
+                    selectedCategory={selectedCategory}
+                    createMenueIcons={createMenueIcons}
+                    handleRandomCheck={handleRandomCheck}
+                    handleCategoriesCheck={handleCategoriesCheck}
+                    handleSearchCheck={handleSearchCheck}
+                    handleGetJoke={handleGetJoke}
+                    setCareerButtonActive={setCareerButtonActive}
+                    setCareerButtonSelected={setCareerButtonSelected}
+                    setCelebrityButtonSelected={setCelebrityButtonSelected}
+                    setDevButtonSelected={setDevButtonSelected}
+                    setCelebrityButtonActive={setCelebrityButtonActive}
+                    setDevButtonActive={setDevButtonActive}
+                    setAnimalButtonActive={setAnimalButtonActive}
+                    setAnimalButtonSelected={setAnimalButtonSelected}
+                    setSelectedCategory={setSelectedCategory}
+
+                    // favouriteCards={favouriteCards}
+                    // setFavouriteCards={setFavouriteCards}
+                    // setFavourite={setFavourite}
+                />
             </div>
 
             <div className="favourites">
-                <Favourite />
+                {/* const [favouriteCards, setFavouriteCards] = useState([]); */}
+                <Favourite
+                    favouriteCards={favouriteCards}
+                    setFavouriteCards={setFavouriteCards}
+                />
             </div>
         </div>
     );
