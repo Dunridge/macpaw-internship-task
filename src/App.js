@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {useCache} from 'react-api-cache';
 import Menue from './components/Menue';
 import Favourite from './components/Favourite';
 //testing imports
@@ -33,15 +34,37 @@ function App() {
 
     //liked cards to be displayed in Favourites
     const [favouriteCards, setFavouriteCards] = useState([]); //favouriteCards is not iterable
+    // const { favouriteCards } = useCache();
     // setFavouriteCards([...favouriteCards, <Card joke = "test" />])
+    // const [cardLikeCounterId, setCardLikeCounter] = useState(0); //maybe you concatendated the strings incorrectly
 
-    console.log(favouriteCards); 
-
-    const setFavourite = (joke) => { //you need to pass JSX as parameters 
+    // window.localStorage.setItem('favourites', JSON.stringify(favouriteCards)); //test // if you put it here it doesn't stay after the refresh 
+    const setFavourite = (joke) => {  
+        
+        // favouriteCards.push(<Card joke={joke}/>); --> it only stores HTTP requests 
+        // window.localStorage.setItem('favourites', JSON.stringify(favouriteCards)); //was .concat(cardLikeCounterId) 
+        // console.log('cardLikeCounterId: ', cardLikeCounterId);
+        //you have to give the array a unique key because every time you reload the page it rewrites the key 
+        //the solution is to create a counter above and increase it every time you set a favourite and 
+        //concatenate it with the favourites string here when you set the item and get it in the Favourite 
+        //component   
+        // console.log('before set');
         setFavouriteCards([
             ...favouriteCards, <Card joke={joke}/>
         ]);
+        
+        window.localStorage.setItem('favourites', JSON.stringify(favouriteCards)); 
+        
+        // let setIncrease = cardLikeCounterId + 1;
+        // setCardLikeCounter(setIncrease);
+        // TODO: try to set the array to local storage here 
+        // window.localStorage.setItem(`favourites`, JSON.stringify(favouriteCards));
+        console.log('set to local storage');
     }
+
+    //test: set the first card here and in the css file give the first child of the favourites container display none 
+    // setFavourite("test"); //this doesn't work 
+    //-------
 
     //se how to set the state in generatedCards
 
@@ -283,6 +306,7 @@ function App() {
                     setAnimalButtonActive={setAnimalButtonActive}
                     setAnimalButtonSelected={setAnimalButtonSelected}
                     setSelectedCategory={setSelectedCategory}
+                    // favouriteCards={favouriteCards}
 
                     // favouriteCards={favouriteCards}
                     // setFavouriteCards={setFavouriteCards}
@@ -294,7 +318,8 @@ function App() {
                 {/* const [favouriteCards, setFavouriteCards] = useState([]); */}
                 <Favourite
                     favouriteCards={favouriteCards}
-                    setFavouriteCards={setFavouriteCards}
+                    // cardLikeCounterId={cardLikeCounterId}
+                    // setFavouriteCards={setFavouriteCards}
                 />
             </div>
         </div>

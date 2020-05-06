@@ -17,9 +17,10 @@ const MainCard = (props) => {
         console.log(cardLikeCounter % 2);
         if (cardLikeCounter % 2 === 1) {
             console.log('if fired');
-            console.log(setCardLike);
+            // console.log(setCardLike);
             setCardLike(true);
             props.setFavourite(props.joke);
+            console.log('favourite set')
         }
         if (cardLikeCounter % 2 === 0) {
             setCardLike(false);
