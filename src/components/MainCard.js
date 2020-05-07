@@ -3,21 +3,17 @@ import LikeButton from '../assets/svg/LikeButton.svg';
 import MessageButton from '../assets/svg/MessageButton.svg';
 import CelebrityButton from '../assets/svg/CelebrityButton.svg';
 import EmptyLikeButton from '../assets/svg/EmptyLikeButton.svg';
-import Card from '../components/Card';
-import ReactDOM from 'react-dom';
 
 const MainCard = (props) => {
     const [cardLike, setCardLike] = useState(false);
     const [cardLikeCounter, setCardLikeCounter] = useState(1);
 
-    // TODO: pass faviouriteCards here through the props and set or remove it here and display it in the favourites 
     const handleCardLike = () => { 
         console.log('handle card like fired');
         console.log('cardLikeCounter: ', cardLikeCounter);
         console.log(cardLikeCounter % 2);
         if (cardLikeCounter % 2 === 1) {
             console.log('if fired');
-            // console.log(setCardLike);
             setCardLike(true);
             props.setFavourite(props.joke);
             console.log('favourite set')
